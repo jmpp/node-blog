@@ -2,32 +2,18 @@ const path = require('path')
 const express = require('express')
 const app = express()
 
-app.set('view engine', 'pug')
-app.set('views', 'views')
+const adminRouter = require('./admin.router.js')
+const blogRouter = require('./blog.router.js')
+
+app.set('view engine', 'pug') // Indique à Express que le moteur de templating à utiliser sera "Pug"
+app.set('views', './views') // Indique à Express le dossier où se trouvent les vues (fichiers .pug)
 
 const PORT = 9000
 const HOST = 'localhost'
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public'))) // Vérifie les requêtes de ressources publiques (css, images, js, ...)
+app.use('/', blogRouter) // Traite les routes pour la partie front-office
+app.use('/admin', adminRouter) // Traite les routes pour la partie back-office (/admin)
 
-app.get('/', (req, res) => {
-    res.render('index')
-})
-
-app.get('/article/:id', (req, res) => {
-    res.render('article')
-})
-
-app.get('/admin', (req, res) => {
-    res.render('admin/admin')
-})
-
-app.get('/admin/write', (req, res) => {
-    res.render('admin/write')
-})
-
-app.get('/admin/edit/:id', (req, res) => {
-    res.render('admin/edit')
-})
-
+// Démarrage de l'application
 app.listen(PORT, HOST, () => console.log(`Le serveur écoute sur http://${HOST}:${PORT}`))
