@@ -1,0 +1,51 @@
+extends ../layout.pug
+
+block variables
+    - let title = 'Modification d\'un article';
+
+block content
+    main.container
+        a(href="/admin")
+            i.fa.fa-arrow-left
+            |  Retour à la liste des articles
+
+        h1 Modifier l'article "Attentat à Barcelone"
+        form(method='post' action='/admin/write')
+            fieldset
+                legend Modification d'un article
+                .form-field
+                    label(for='titre') Titre :
+                    input#titre(type='text' name='titre' placeholder='Titre de votre article ...')
+                .form-field
+                    label(for='categorie') Categorie :
+                    select#categorie(name='categorie')
+                        option(value='1') Informatique
+                        option(value='2') Sport
+                        option(value='3') Musique
+                        option(value='4') Danse
+                        option(value='5') Peinture
+                        option(value='6') Littérature
+                        option(value='7') Sciences
+                .form-field
+                    label(for='contenu') Contenu :
+                    textarea#contenu.textarea-big(name='contenu' placeholder='Lorem ipsum dolor sit amet ...')
+                .form-field
+                    label(for='auteur') Auteur :
+                    select#auteur(name='auteur')
+                        option(value='1') Arthur Rimbaud
+                        option(value='2') Paul Verlaine
+                        option(value='3') Jacques Prévert
+                        option(value='4') Guy DeMaupassant
+                        option(value='5') Charles Baudelaire
+                        option(value='6') Pierre Coran
+                        option(value='7') Phillipe Renaud
+                        option(value='8') Jean-Pierre Toto
+                        option(value='9') Yves Robert
+                        option(value='10') Hervé Billon
+                        option(value='11') Jean-Marie Cléry
+                .form-field.align-center
+                    button.btn(type='submit') Publier
+
+
+
+

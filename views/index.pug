@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-html(lang="fr")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Blog Node.js
-    body
+extends layout.pug
 
-        h1 Bienvenue #{name} sur mon blog
+mixin article(id, titre, description, date, auteur, categorie)
+    article
+        h1
+            a(href='/article/'+ id)= titre
+        p= description + ' '
+            a(href='/article/'+ id) Lire la suite
+        footer
+            span.infos
+                i.fa.fa-calendar
+                |  Publi&eacute; #{date}, par 
+                em= auteur + ' '
+                span.categorie
+                    i.fa.fa-tag
+                    |  #{categorie}
 
-        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ullam omnis labore debitis iusto nostrum necessitatibus tempore unde excepturi, officia, ipsam error possimus harum! Neque ipsum est dolorem ex nostrum.
+block variables
+    - let title = 'Accueil';
+
+block content
+    main.container
+        h1 Bienvenue sur mon blog
+
+        p Voici la liste des derniers articles du blog :
+
+        +article(1, 'Titre 1', 'Lorem ipsum 1...', 'le dd/mm/yyyy à hh:mm', 'Auteur 1', 'Catégorie 1')
+        +article(2, 'Titre 2', 'Lorem ipsum 2...', 'le dd/mm/yyyy à hh:mm', 'Auteur 2', 'Catégorie 2')
+        +article(3, 'Titre 3', 'Lorem ipsum 3...', 'le dd/mm/yyyy à hh:mm', 'Auteur 3', 'Catégorie 3')
