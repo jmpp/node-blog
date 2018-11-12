@@ -1,4 +1,7 @@
 const express = require('express')
+const Author = require('./models/Author.model')
+const Category = require('./models/Category.model')
+const Article = require('./models/Article.model')
 
 // Création d'un nouvel objet "Router"
 let adminRouter = express.Router();
@@ -16,7 +19,23 @@ adminRouter.get('/', (req, res) => {
  * Affiche le formulaire permettant de créer un nouvel article
  */
 adminRouter.get('/write', (req, res) => {
-    res.render('admin/write')
+    // Va récupérer la liste des auteurs et des categories en base, et les passent à la vue
+    Promise.all([
+        Author.find().sort('name'),
+        Category.find().sort('title')
+    ])
+    .then(([authors, categories]) => res.render('admin/write', { authors, categories }))
+    .catch(error => res.send(error.message))
+})
+
+/**
+ * POST /admin/write
+ * Récupère les données du formulaire et crée l'article dans la base.
+ */
+adminRouter.post('/write', (req, res) => {
+    Article.createArticle(req.body.titre, req.body.contenu, req.body.categorie, req.body.auteur).then(() => {
+        res.redirect('/')
+    }).catch(error => res.send(error.message))
 })
 
 /**

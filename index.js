@@ -2,6 +2,7 @@ require('dotenv').config()
 const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const app = express()
 
 const adminRouter = require('./admin.router.js')
@@ -14,6 +15,7 @@ const PORT = 9000
 const HOST = 'localhost'
 
 app.use(express.static(path.join(__dirname, 'public'))) // Vérifie les requêtes de ressources publiques (css, images, js, ...)
+app.use(bodyParser.urlencoded({extended: false}))
 app.use('/', blogRouter) // Traite les routes pour la partie front-office
 app.use('/admin', adminRouter) // Traite les routes pour la partie back-office (/admin)
 
