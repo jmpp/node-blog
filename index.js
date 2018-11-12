@@ -10,6 +10,7 @@ const blogRouter = require('./blog.router.js')
 
 app.set('view engine', 'pug') // Indique à Express que le moteur de templating à utiliser sera "Pug"
 app.set('views', './views') // Indique à Express le dossier où se trouvent les vues (fichiers .pug)
+app.set('view cache', process.env.NODE_ENV === 'production')
 
 const PORT = 9000
 const HOST = 'localhost'
