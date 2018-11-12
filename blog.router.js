@@ -19,7 +19,11 @@ blogRouter.get('/', (req, res) => {
  * Affiche le détail d'un article en fonction de l'ID demandé
  */
 blogRouter.get('/article/:id', (req, res) => {
-    res.render('article')
+    Article.findById( req.params.id ).populate('author category').exec().then(article => {
+        if (!article) return Promise.reject(new Error('Article inexistant.'))
+
+        res.render('article', { article })
+    }).catch(error => res.send(error.message))
 })
 
 // Exporte l'objet Router créé

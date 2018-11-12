@@ -1,24 +1,22 @@
 extends layout.pug
 
 block variables
-    - let title = 'Titre de l\'article';
+    - let title = article.title;
 
 block content
     main.container
         a(href="/")
             i.fa.fa-arrow-left
             |  Retour à la liste des articles
-
-        h1
-            | Bienvenue sur mon blog 
+        h1= article.title + ' '
             span.categorie
                 i.fa.fa-tag
-                | Catégorie
+                |  #{article.category.title}
         h3
-            | Publié le dd/mm/yyyy à hh:mm, par 
-            em Arthur Rimbaud
+            | Publié le #{new Date(article.dateCreated).toLocaleString()}, par 
+            em= article.author.name
         
-        p Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis libero maiores nemo voluptas error numquam adipisci natus accusantium repellat, omnis blanditiis ratione sequi dolores distinctio molestias ullam? Quas, commodi libero.
+        p= article.content
 
         hr
 
