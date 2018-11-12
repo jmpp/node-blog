@@ -4,12 +4,12 @@ mixin article(id, titre, description, date, auteur, categorie)
     article
         h1
             a(href='/article/'+ id)= titre
-        p= description + ' '
+        p= description.slice(0, 100) + '... '
             a(href='/article/'+ id) Lire la suite
         footer
             span.infos
                 i.fa.fa-calendar
-                |  Publi&eacute; #{date}, par 
+                |  Publi&eacute; #{new Date(date).toLocaleString()}, par 
                 em= auteur + ' '
                 span.categorie
                     i.fa.fa-tag
@@ -24,6 +24,5 @@ block content
 
         p Voici la liste des derniers articles du blog :
 
-        +article(1, 'Titre 1', 'Lorem ipsum 1...', 'le dd/mm/yyyy à hh:mm', 'Auteur 1', 'Catégorie 1')
-        +article(2, 'Titre 2', 'Lorem ipsum 2...', 'le dd/mm/yyyy à hh:mm', 'Auteur 2', 'Catégorie 2')
-        +article(3, 'Titre 3', 'Lorem ipsum 3...', 'le dd/mm/yyyy à hh:mm', 'Auteur 3', 'Catégorie 3')
+        each article in articles
+            +article(article._id, article.title, article.content, article.dateCreated, article.author.name, article.category.title)
