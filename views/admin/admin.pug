@@ -3,7 +3,7 @@ extends ../layout.pug
 mixin article_row(id, date, title, author, category)
     tr
         td= id
-        td= date
+        td= new Date(date).toLocaleString()
         td
             a(href='/article/'+ id)= title
         td= author
@@ -49,6 +49,5 @@ block content
                         i.fa.fa-cog
                         |  Actions
             tbody
-                +article_row(1, 'le 22/10/2018 à 10:13', 'Titre article 1', 'Arthur Rimbaud', 'Informatique')
-                +article_row(2, 'le 25/10/2018 à 09:15', 'Titre article 2', 'Arthur Rimbaud', 'Informatique')
-                +article_row(3, 'le 13/11/2018 à 14:30', 'Titre article 3', 'Arthur Rimbaud', 'Informatique')
+                each article in articles
+                    +article_row(article._id, article.dateCreated, article.title, article.author.name, article.category.title)

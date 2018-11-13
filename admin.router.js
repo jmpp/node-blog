@@ -11,7 +11,9 @@ let adminRouter = express.Router();
  * Affiche la page d'accueil de l'espace d'administration (et la liste des articles)
  */
 adminRouter.get('/', (req, res) => {
-    res.render('admin/admin')
+    Article.find().populate('author category').exec().then(articles => {
+        res.render('admin/admin', { articles })
+    }).catch(error => res.send(error.message))
 })
 
 /**
