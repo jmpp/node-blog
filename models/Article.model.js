@@ -4,6 +4,7 @@
 
 const mongoose = require('mongoose')
 const shortid = require('shortid')
+const idValidator = require('mongoose-id-validator')
 
 // Création d'un nouveau Schema mongoose : ce schéma permettra d'indiquer à mongoose quelle doit être la structure d'un document `Article` qui entre dans la base.
 // C'est un peut comme définir les champs d'une table avec MySQL et phpMyAdmin
