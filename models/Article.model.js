@@ -25,5 +25,14 @@ articleSchema.statics.createArticle = function createArticle(title, content, cat
     })
 }
 
+articleSchema.statics.updateArticle = function updateArticle(id, title, content, category, author) {
+    return this.findByIdAndUpdate(id, {
+        title,
+        content,
+        category,
+        author
+    })
+}
+
 // Et sur la base de ce schéma, on exporte un nouveau modèle Mongoose qui permettra de manipuler et créer des documents de type `Article` dans la base Mongo
 module.exports = mongoose.model('Article', articleSchema)

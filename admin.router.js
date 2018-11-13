@@ -45,7 +45,28 @@ adminRouter.post('/write', (req, res) => {
  * Affiche le formulaire permettant de supprimer un article via son ID
  */
 adminRouter.get('/edit/:id', (req, res) => {
-    res.render('admin/edit')
+    // Va récupérer la liste des auteurs et des categories en base, et les passent à la vue
+    Article.findById(req.params.id)
+        .populate('author category')
+        .then(article => {
+            if (!article) return Promise.reject(new Error('Article introuvable!'))
+            return article
+        })
+        .then(article => {
+            return Promise.all([
+                Author.find().sort('name'),
+                Category.find().sort('title'),
+                article
+            ])
+        })
+        .then(([authors, categories, article]) => res.render('admin/edit', { authors, categories, article }))
+        .catch(error => res.send(error.message))
+})
+
+adminRouter.post('/edit/:id', (req, res) => {
+    Article.updateArticle(req.params.id, req.body.titre, req.body.contenu, req.body.categorie, req.body.auteur).then(() => {
+        res.redirect('/admin')
+    }).catch(error => res.send(error.message))
 })
 
 /**

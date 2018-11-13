@@ -1,7 +1,7 @@
 extends ../layout.pug
 
 block variables
-    - let title = 'Modification d\'un article';
+    - let title = `Modification de "${article.title}"`;
 
 block content
     main.container
@@ -9,40 +9,32 @@ block content
             i.fa.fa-arrow-left
             |  Retour à la liste des articles
 
-        h1 Modifier l'article "Attentat à Barcelone"
-        form(method='post' action='/admin/write')
+        h1 Modifier l'article "#{article.title}"
+        form(method='post' action='/admin/edit/'+ article._id)
             fieldset
                 legend Modification d'un article
                 .form-field
                     label(for='titre') Titre :
-                    input#titre(type='text' name='titre' placeholder='Titre de votre article ...')
+                    input#titre(type='text' name='titre' placeholder='Titre de votre article ...' value=article.title)
                 .form-field
                     label(for='categorie') Categorie :
                     select#categorie(name='categorie')
-                        option(value='1') Informatique
-                        option(value='2') Sport
-                        option(value='3') Musique
-                        option(value='4') Danse
-                        option(value='5') Peinture
-                        option(value='6') Littérature
-                        option(value='7') Sciences
+                        each category in categories
+                            if category._id === article.category._id
+                                option(value=category._id selected)= category.title
+                            else
+                                option(value=category._id)= category.title
                 .form-field
                     label(for='contenu') Contenu :
-                    textarea#contenu.textarea-big(name='contenu' placeholder='Lorem ipsum dolor sit amet ...')
+                    textarea#contenu.textarea-big(name='contenu' placeholder='Lorem ipsum dolor sit amet ...')= article.content
                 .form-field
                     label(for='auteur') Auteur :
                     select#auteur(name='auteur')
-                        option(value='1') Arthur Rimbaud
-                        option(value='2') Paul Verlaine
-                        option(value='3') Jacques Prévert
-                        option(value='4') Guy DeMaupassant
-                        option(value='5') Charles Baudelaire
-                        option(value='6') Pierre Coran
-                        option(value='7') Phillipe Renaud
-                        option(value='8') Jean-Pierre Toto
-                        option(value='9') Yves Robert
-                        option(value='10') Hervé Billon
-                        option(value='11') Jean-Marie Cléry
+                        each author in authors
+                            if author._id === article.author._id
+                                option(value=author._id selected)= author.name
+                            else
+                                option(value=author._id)= author.name
                 .form-field.align-center
                     button.btn(type='submit') Publier
 
