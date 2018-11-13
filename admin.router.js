@@ -52,8 +52,11 @@ adminRouter.get('/edit/:id', (req, res) => {
  * DELETE /admin/delete/:id
  * Supprime l'article via son ID, et redirige vers l'accueil de l'espace d'administration
  */
-adminRouter.delete('/delete/:id', (req, res) => {
-    res.redirect('/admin')
+adminRouter.get('/delete/:id', (req, res) => {
+    Article.findByIdAndDelete(req.params.id).then(articleDeleted => {
+        if (!articleDeleted) return Promise.reject(new Error('Article introuvable!'))
+        res.redirect('/admin')
+    }).catch(error => res.send(error.message))
 })
 
 // Exporte l'objet Router créé
