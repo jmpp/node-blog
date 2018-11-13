@@ -17,7 +17,20 @@ const articleSchema = mongoose.Schema({
 	'author'      : {type : String, required : true, ref : 'Author'},
 })
 
+// Plugin qui permet de s'assurer que les IDs entrants correspondent aux "ref" du champs
+articleSchema.plugin(idValidator)
+
+
 articleSchema.statics.createArticle = function createArticle(title, content, category, author) {
+    let errors = [];
+    if (title.trim() === '') errors.push(`Le titre doit être renseigné`)
+    if (content.trim() === '') errors.push(`Le contenu doit être renseigné`)
+    if (category.trim() === '') errors.push(`La catégorie doit être renseignée`)
+    if (author.trim() === '') errors.push(`L'auteur doit être renseigné`)
+
+    if (errors.length > 0)
+        return Promise.reject(new Error(errors.join('<br>')))
+    
     return this.create({
         title,
         content,
@@ -27,6 +40,15 @@ articleSchema.statics.createArticle = function createArticle(title, content, cat
 }
 
 articleSchema.statics.updateArticle = function updateArticle(id, title, content, category, author) {
+    let errors = [];
+    if (title.trim() === '') errors.push(`Le titre doit être renseigné`)
+    if (content.trim() === '') errors.push(`Le contenu doit être renseigné`)
+    if (category.trim() === '') errors.push(`La catégorie doit être renseignée`)
+    if (author.trim() === '') errors.push(`L'auteur doit être renseigné`)
+
+    if (errors.length > 0)
+        return Promise.reject(new Error(errors.join('<br>')))
+        
     return this.findByIdAndUpdate(id, {
         title,
         content,
