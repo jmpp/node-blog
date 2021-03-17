@@ -13,8 +13,8 @@ const articleSchema = mongoose.Schema({
 	'title'       : {type : String, required : true},
 	'dateCreated' : {type : Date,   required : true, default : Date.now},
 	'content'     : {type : String, required : true},
-	'category'    : {type : String, required : true, ref : 'Category'},
-	'author'      : {type : String, required : true, ref : 'Author'},
+	'category'    : {type : String, required : true, ref : 'Categories'},
+	'author'      : {type : String, required : true, ref : 'Authors'},
 })
 
 // Plugin qui permet de s'assurer que les IDs entrants correspondent aux "ref" du champs
@@ -58,4 +58,4 @@ articleSchema.statics.updateArticle = function updateArticle(id, title, content,
 }
 
 // Et sur la base de ce schéma, on exporte un nouveau modèle Mongoose qui permettra de manipuler et créer des documents de type `Article` dans la base Mongo
-module.exports = mongoose.model('Article', articleSchema)
+module.exports = mongoose.model('Articles', articleSchema, 'Articles')

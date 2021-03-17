@@ -13,4 +13,4 @@ const categorySchema = mongoose.Schema({
 })
 
 // Et sur la base de ce schéma, on exporte un nouveau modèle Mongoose qui permettra de manipuler et créer des documents de type `category` dans la base Mongo
-module.exports = mongoose.model('Category', categorySchema)
+module.exports = mongoose.model('Categories', categorySchema, 'Categories')

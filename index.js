@@ -23,7 +23,7 @@ app.use('/admin', adminRouter) // Traite les routes pour la partie back-office (
 // Démarrage de l'application
 // -----------------------------------------
 
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env // Récupère les valeurs des variables d'environnement présentes dans le fichier ".env"
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env // Récupère les valeurs des variables d'environnement présentes dans le fichier ".env"
 const startApp = app => { // Création d'une fonction qui renvoie une promesse résolue (ou rejetée) en fonction du résultat du "app.listen" d'Express
     return new Promise( (resolve, reject) => {
         const server = app.listen(PORT, HOST, resolve)
@@ -31,8 +31,10 @@ const startApp = app => { // Création d'une fonction qui renvoie une promesse r
     } );
 }
 
+let connectionString = `mongodb+srv://${encodeURIComponent(DB_USER)}:${encodeURIComponent(DB_PASSWORD)}@${DB_HOST}/${DB_NAME}`;
+
 mongoose
-    .connect(`mongodb://${encodeURIComponent(DB_USER)}:${encodeURIComponent(DB_PASSWORD)}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {useNewUrlParser:true})
+    .connect(connectionString, {useNewUrlParser:true, useUnifiedTopology: true})
     .then(() => console.log('MongoDB : Connexion établie'))
     .then(() => startApp(app))
     .then(() => console.log(`Express : Le serveur écoute sur http://${HOST}:${PORT}`))

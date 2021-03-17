@@ -13,4 +13,4 @@ const authorSchema = mongoose.Schema({
 })
 
 // Et sur la base de ce schéma, on exporte un nouveau modèle Mongoose qui permettra de manipuler et créer des documents de type `auteur` dans la base Mongo
-module.exports = mongoose.model('Author', authorSchema)
+module.exports = mongoose.model('Authors', authorSchema, 'Authors')
